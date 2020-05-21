@@ -1,0 +1,44 @@
+<canvas id="myCanvas" width="1000" height="1000"></canvas>
+
+<script>
+    canvas = document.getElementById("myCanvas");
+    ctx = canvas.getContext("2d");
+
+    function start(img) {
+
+
+        let w = img.width;
+        let h = img.height;
+
+        let sizer = scalePreserveAspectRatio(w, h, canvas.width, canvas.height);
+
+        ctx.drawImage(img, 0, 0, w, h, 0, 0, w * sizer, h * sizer);
+
+    }
+
+    function scalePreserveAspectRatio(imgW, imgH, maxW, maxH) {
+        return (Math.min((maxW / imgW), (maxH / imgH)));
+    }
+
+    window.onload = function () {
+        let imgMontre = new Image();
+        let imgHeure = new Image();
+        let imgMinute = new Image();
+        imgMontre.onload = () => {
+            start(imgMontre);
+            imgHeure.onload = () => {
+                start(imgHeure);
+                imgMinute.onload = () => start(imgMinute);
+                imgMinute.src = "minute2.png";
+
+            }
+            imgHeure.src = "heure2.png";
+        };
+        imgMontre.src = "montre.png";
+
+
+        ctx.fillStyle = "#03EFFF";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    };
+
+</script>
