@@ -35,7 +35,7 @@ function draw(time = 0) {
     }
 
     if (!isStop) {
-        timer.value = `${now.getHours()}:${now.getMinutes()<10?'0':''}${now.getMinutes()}`;
+        manageTimer(true);
     }
 
     drawImage(imgHeure, hourMinuteToAngle(now.getHours(), now.getMinutes()));
@@ -76,15 +76,19 @@ function minuteToAngle(minute, second) {
     return minute * minuteStep + second * minuteSecondeStep;
 }
 
-function manageTimer() {
-    window.clearInterval(interval);
-    draw(timer.value);
+function manageTimer(startDrawing) {
+    if(startDrawing){
+        let now = new Date();
+        timer.value = `${now.getHours()}:${now.getMinutes()<10?'0':''}${now.getMinutes()}`;
+    }else{
+        window.clearInterval(interval);
+        draw(timer.value);
+    }
 }
 
 function restart() {
-    draw();
     isStop = false;
-    let now = new Date();
+    draw();
     interval = window.setInterval(draw, 1000);
 }
 
