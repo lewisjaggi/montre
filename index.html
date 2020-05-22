@@ -1,5 +1,6 @@
-<canvas id="myCanvas" width="1000" height="1000"></canvas>
-
+<canvas id="myCanvas" width="800" height="1000"></canvas>
+<input type="time" id="timer" name="timer" onchange="manageTimer();">
+<input type="button" id="now" name="now" value="Now" onclick="restart();">
 <script>
     hourStep = Math.PI * 2 / 12;
     houtMinuteStep = hourStep / 60;
@@ -7,26 +8,30 @@
     minuteSecondeStep = minuteStep / 60;
     canvas = document.getElementById("myCanvas");
     ctx = canvas.getContext("2d");
+    timer = document.getElementById("timer");
 
     window.onload = function () {
         imgMontre = new Image();
         imgHeure = new Image();
         imgMinute = new Image();
         imgMontre.src = 'montre.png';
-        imgHeure.src = 'heure2.png';
-        imgMinute.src = 'minute2.png';
+        imgHeure.src = 'heure.png';
+        imgMinute.src = 'minute.png';
 
 
-        window.setInterval(draw, 1000);
+        interval = window.setInterval(draw, 1000);
     };
 
-    function draw() {
+    function draw(time = 0) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = "#03EFFF";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         drawImage(imgMontre);
-
         let now = new Date();
+        if (time != 0) {
+            console.log(22);
+            now = new Date(now.toDateString() + ' ' + time);
+        }
         drawImage(imgHeure, hourMinuteToAngle(now.getHours(), now.getMinutes()));
 
         drawImage(imgMinute, minuteToAngle(now.getMinutes(), now.getSeconds()));
@@ -63,5 +68,15 @@
 
     function minuteToAngle(minute, second) {
         return minute * minuteStep + second * minuteSecondeStep;
+    }
+
+    function manageTimer() {
+        window.clearInterval(interval);
+        draw(timer.value);
+
+    }
+    function restart(){
+        draw();
+        interval = window.setInterval(draw,1000);
     }
 </script>
