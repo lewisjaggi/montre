@@ -35,7 +35,7 @@ function draw(time = 0) {
     }
 
     if (!isStop) {
-        timeChange(true);
+        timer.value = `${now.getHours()}:${now.getMinutes() < 10 ? '0' : ''}${now.getMinutes()}`;
     }
 
     drawImage(imgHeure, hourMinuteToAngle(now.getHours(), now.getMinutes()));
@@ -77,14 +77,6 @@ function minuteToAngle(minute, second) {
 }
 
 
-function timeChange(startDrawing) {
-    if (startDrawing) {
-        let now = new Date();
-        timer.value = `${now.getHours()}:${now.getMinutes() < 10 ? '0' : ''}${now.getMinutes()}`;
-    } else {
-        manageTimer();
-    }
-}
 
 function manageTimer() {
     window.clearInterval(interval);
