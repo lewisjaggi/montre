@@ -2,8 +2,9 @@
 
 <script>
     hourStep = Math.PI * 2 / 12;
-    houtMinuteStep = hourStep /60;
-    minuteStep = Math.PI * 2 /60;
+    houtMinuteStep = hourStep / 60;
+    minuteStep = Math.PI * 2 / 60;
+    minuteSecondeStep = minuteStep / 60;
     canvas = document.getElementById("myCanvas");
     ctx = canvas.getContext("2d");
 
@@ -26,9 +27,9 @@
         drawImage(imgMontre);
 
         let now = new Date();
-        drawImage(imgHeure,hourMinuteToAngle(now.getHours(),now.getMinutes()));
+        drawImage(imgHeure, hourMinuteToAngle(now.getHours(), now.getMinutes()));
 
-        drawImage(imgMinute,minuteToAngle(now.getMinutes()));
+        drawImage(imgMinute, minuteToAngle(now.getMinutes(), now.getSeconds()));
 
     }
 
@@ -55,13 +56,12 @@
     }
 
 
-
     function hourMinuteToAngle(hour, minute) {
         hour = (hour > 12) ? hour - 12 : hour;
         return hour * hourStep + minute * houtMinuteStep;
     }
 
-    function minuteToAngle(minute){
-        return minute * minuteStep;
+    function minuteToAngle(minute, second) {
+        return minute * minuteStep + second * minuteSecondeStep;
     }
 </script>
