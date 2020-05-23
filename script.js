@@ -5,13 +5,15 @@ minuteSecondeStep = minuteStep / 60;
 canvas = document.getElementById("myCanvas");
 ctx = canvas.getContext("2d");
 timer = document.getElementById("timer");
-backgroundColor = "#3333FF";
+backgroundColor = '';
 srcImgMontre = 'montre.png'
 srcImgHeure = 'heure.png'
 srcImgMinute = 'minute.png'
 isStop = false;
 
 window.onload = function () {
+	backgroundColor = document.getElementById("color").value
+	console.log(backgroundColor);
     imgMontre = new Image();
     imgHeure = new Image();
     imgMinute = new Image();
