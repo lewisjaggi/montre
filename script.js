@@ -12,8 +12,7 @@ srcImgMinute = 'minute.png'
 isStop = false;
 
 window.onload = function () {
-	backgroundColor = document.getElementById("color").value
-	console.log(backgroundColor);
+    backgroundColor = document.getElementById("color").value
     imgMontre = new Image();
     imgHeure = new Image();
     imgMinute = new Image();
@@ -22,7 +21,7 @@ window.onload = function () {
     imgMinute.src = srcImgMinute;
     let now = new Date();
 
-    timer.value = `${now.getHours()}:${now.getMinutes()}`;
+    timer.value = `${now.getHours() < 10 ? '0' : ''}${now.getHours()}:${now.getMinutes() < 10 ? '0' : ''}${now.getMinutes()}`;
     interval = window.setInterval(draw, 1000);
 };
 
@@ -37,7 +36,7 @@ function draw(time = 0) {
     }
 
     if (!isStop) {
-        timer.value = `${now.getHours()}:${now.getMinutes() < 10 ? '0' : ''}${now.getMinutes()}`;
+        timer.value = `${now.getHours() < 10 ? '0' : ''}${now.getHours()}:${now.getMinutes() < 10 ? '0' : ''}${now.getMinutes()}`;
     }
 
     drawImage(imgHeure, hourMinuteToAngle(now.getHours(), now.getMinutes()));
@@ -77,7 +76,6 @@ function hourMinuteToAngle(hour, minute) {
 function minuteToAngle(minute, second) {
     return minute * minuteStep + second * minuteSecondeStep;
 }
-
 
 
 function manageTimer() {
