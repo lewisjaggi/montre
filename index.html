@@ -6,6 +6,14 @@
 </head>
 <body>
 <canvas id="myCanvas" width="800" height="1040"></canvas>
+<select name="watch" id="watch" onchange="changeWatch(this.value)">
+    <option value="singapore" selected>singapore</option>
+    <option value="joburg" >joburg</option>
+    <option value="dubai">dubai</option>
+    <option value="kingston">kingston</option>
+    <option value="newyork">new york</option>
+    <option value="monaco">monaco</option>
+</select>
 <input type="color" id="color" name="color" value="#000000" onchange="backgroundColor=this.value;">
 <input type="time" id="timer" name="timer" onclick="clickTime();" onchange="manageTimer();">
 <input type="button" id="now" name="now" value="Now" onclick="restart();">

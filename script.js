@@ -5,20 +5,26 @@ minuteSecondeStep = minuteStep / 60;
 canvas = document.getElementById("myCanvas");
 ctx = canvas.getContext("2d");
 timer = document.getElementById("timer");
-backgroundColor = '';
-srcImgMontre = 'montre.png'
-srcImgHeure = 'heure.png'
-srcImgMinute = 'minute.png'
 isStop = false;
+backColor = {
+    'singapore': '#000000',
+    'joburg': '#000000',
+    'dubai': '#000000',
+    'kingston': '#000000',
+    'newyork': '#113D83',
+    'monaco': '#000000',
+};
 
 window.onload = function () {
     backgroundColor = document.getElementById("color").value
+    selectWatch = document.getElementById('watch').value;
+
     imgMontre = new Image();
     imgHeure = new Image();
     imgMinute = new Image();
-    imgMontre.src = srcImgMontre;
-    imgHeure.src = srcImgHeure;
-    imgMinute.src = srcImgMinute;
+    imgMontre.src = `img/${selectWatch}/montre.png`;
+    imgHeure.src = `img/${selectWatch}/heure.png`;
+    imgMinute.src = `img/${selectWatch}/minute.png`;
     let now = new Date();
 
     timer.value = `${now.getHours() < 10 ? '0' : ''}${now.getHours()}:${now.getMinutes() < 10 ? '0' : ''}${now.getMinutes()}`;
@@ -91,4 +97,11 @@ function restart() {
 
 function clickTime() {
     isStop = true;
+}
+
+function changeWatch(watch) {
+    //backgroundColor = backColor[watch];
+    imgMontre.src = `img/${watch}/montre.png`;
+    imgHeure.src = `img/${watch}/heure.png`;
+    imgMinute.src = `img/${watch}/minute.png`;
 }
