@@ -6,14 +6,14 @@ canvas = document.getElementById("myCanvas");
 ctx = canvas.getContext("2d");
 timer = document.getElementById("timer");
 isStop = false;
-backColor = {
+/*backColor = {
     'singapore': '#000000',
     'joburg': '#000000',
     'dubai': '#000000',
     'kingston': '#000000',
-    'newyork': '#113D83',
+    'newyork': '#000000',
     'monaco': '#000000',
-};
+};*/
 
 window.onload = function () {
     backgroundColor = document.getElementById("color").value
@@ -100,7 +100,8 @@ function clickTime() {
 }
 
 function changeWatch(watch) {
-    //backgroundColor = backColor[watch];
+    backgroundColor = '#000000';
+    document.getElementById("color").value = '#000000'
     imgMontre.src = `img/${watch}/montre.png`;
     imgHeure.src = `img/${watch}/heure.png`;
     imgMinute.src = `img/${watch}/minute.png`;
