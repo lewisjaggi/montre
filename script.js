@@ -102,7 +102,17 @@ function clickTime() {
 function changeWatch(watch) {
     backgroundColor = '#000000';
     document.getElementById("color").value = '#000000'
+    if(isStop){
+        draw(timer.value);
+    }
     imgMontre.src = `img/${watch}/montre.png`;
     imgHeure.src = `img/${watch}/heure.png`;
     imgMinute.src = `img/${watch}/minute.png`;
+}
+
+function changeColor(color) {
+    backgroundColor=color;
+    if(isStop){
+        draw(timer.value);
+    }
 }
