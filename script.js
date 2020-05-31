@@ -121,13 +121,11 @@ function clickTime() {
 }
 
 function changeWatch(watch) {
+    selectWatch = watch;
     backgroundColor = '#000000';
     document.getElementById("color").value = '#000000'
 
-
-    if (isStop) draw(timer.value);
-
-    imgMontre.src = `img/${watch}/montre.png`;
+    imgMontre.src = `img/${selectWatch}/montre.png`;
 
 
 }
@@ -151,6 +149,7 @@ function fast() {
         isStop = false;
         interval = window.setInterval(draw, 10)
     } else {
+        isStop = true;
         window.clearInterval(interval)
     }
 
