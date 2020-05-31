@@ -10,7 +10,6 @@ buttonFast = document.getElementById('fast')
 isStop = false;
 now = new Date();
 isFast = false;
-modeFast = false;
 
 /*backColor = {
     'singapore': '#000000',
