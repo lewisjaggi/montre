@@ -6,8 +6,12 @@ minuteSecondeStep = minuteStep / 60;
 canvas = document.getElementById("myCanvas");
 ctx = canvas.getContext("2d");
 timer = document.getElementById("timer");
+buttonFast = document.getElementById('fast')
 isStop = false;
 now = new Date();
+isFast = false;
+modeFast = false;
+
 /*backColor = {
     'singapore': '#000000',
     'joburg': '#000000',
@@ -29,7 +33,8 @@ window.onload = function () {
     imgMinute.src = `img/${selectWatch}/minute.png`;
 
     timer.value = `${now.getHours() < 10 ? '0' : ''}${now.getHours()}:${now.getMinutes() < 10 ? '0' : ''}${now.getMinutes()}`;
-    interval = window.setInterval(draw, 10);
+
+    interval = window.setInterval(draw, 1000);
 };
 
 function draw(time = 0) {
@@ -40,15 +45,17 @@ function draw(time = 0) {
 
     if (time != 0) {
         now = new Date(now.toDateString() + ' ' + time);
-    }else{
-        now.setSeconds(now.getSeconds()+6)
+    } else if (isFast) {
+        now.setSeconds(now.getSeconds() + 6)
+    } else {
+        now = new Date();
     }
 
     if (!isStop) {
         timer.value = `${now.getHours() < 10 ? '0' : ''}${now.getHours()}:${now.getMinutes() < 10 ? '0' : ''}${now.getMinutes()}`;
     }
 
-    drawImage(imgHeure, hourMinuteToAngle(now.getHours(), now.getMinutes(),now.getSeconds()));
+    drawImage(imgHeure, hourMinuteToAngle(now.getHours(), now.getMinutes(), now.getSeconds()));
 
     drawImage(imgMinute, minuteToAngle(now.getMinutes(), now.getSeconds()));
 
@@ -77,9 +84,9 @@ function drawImage(img, angle = 0) {
 }
 
 
-function hourMinuteToAngle(hour, minute,seconde) {
+function hourMinuteToAngle(hour, minute, seconde) {
     hour = (hour > 12) ? hour - 12 : hour;
-    return hour * hourStep + minute * hourMinuteStep +seconde * hourSecondeStep;
+    return hour * hourStep + minute * hourMinuteStep + seconde * hourSecondeStep;
 }
 
 function minuteToAngle(minute, second) {
@@ -89,15 +96,19 @@ function minuteToAngle(minute, second) {
 
 function manageTimer() {
     window.clearInterval(interval);
+    buttonFast.value = 'Fast'
+    isFast = false;
     draw(timer.value);
 }
 
 function restart() {
     window.clearInterval(interval);
+    buttonFast.value = "Fast";
+    isFast = false;
     isStop = false;
     now = new Date()
     draw();
-    interval = window.setInterval(draw, 10);
+    interval = window.setInterval(draw, 1000);
 }
 
 function clickTime() {
@@ -107,7 +118,7 @@ function clickTime() {
 function changeWatch(watch) {
     backgroundColor = '#000000';
     document.getElementById("color").value = '#000000'
-    if(isStop){
+    if (isStop) {
         draw(timer.value);
     }
     imgMontre.src = `img/${watch}/montre.png`;
@@ -116,8 +127,21 @@ function changeWatch(watch) {
 }
 
 function changeColor(color) {
-    backgroundColor=color;
-    if(isStop){
+    backgroundColor = color;
+    if (isStop) {
         draw(timer.value);
     }
+}
+
+function fast() {
+    isFast = !isFast
+    buttonFast.value = isFast ? 'Stop' : 'Fast';
+
+    if (isFast) {
+        window.clearInterval(interval)
+        interval = window.setInterval(draw, 10)
+    } else {
+        window.clearInterval(interval)
+    }
+
 }
