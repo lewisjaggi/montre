@@ -47,7 +47,7 @@ function draw(time = 0) {
         now = new Date(now.toDateString() + ' ' + time);
     } else if (isFast) {
         now.setSeconds(now.getSeconds() + 6)
-    } else {
+    } else if(!isStop){
         now = new Date();
     }
 
@@ -106,7 +106,6 @@ function restart() {
     buttonFast.value = "Fast";
     isFast = false;
     isStop = false;
-    now = new Date()
     draw();
     interval = window.setInterval(draw, 1000);
 }
@@ -118,19 +117,33 @@ function clickTime() {
 function changeWatch(watch) {
     backgroundColor = '#000000';
     document.getElementById("color").value = '#000000'
-    if (isStop) {
-        draw(timer.value);
-    }
-    imgMontre.src = `img/${watch}/montre.png`;
-    imgHeure.src = `img/${watch}/heure.png`;
-    imgMinute.src = `img/${watch}/minute.png`;
+
+        imgMontre.onload = () =>  {
+            imgHeure.onload = () =>{
+                imgMinute.onload = () =>{
+                    if(isStop) draw(timer.value);
+                }
+                imgMinute.src = `img/${watch}/minute.png`;
+            }
+            imgHeure.src = `img/${watch}/heure.png`;
+        }
+        imgMontre.src = `img/${watch}/montre.png`;
+
+
+
+
+
+
 }
 
 function changeColor(color) {
     backgroundColor = color;
     if (isStop) {
         draw(timer.value);
+    }else{
+        draw();
     }
+
 }
 
 function fast() {
@@ -139,6 +152,7 @@ function fast() {
 
     if (isFast) {
         window.clearInterval(interval)
+        isStop = false;
         interval = window.setInterval(draw, 10)
     } else {
         window.clearInterval(interval)
