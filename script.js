@@ -1,11 +1,13 @@
 hourStep = Math.PI * 2 / 12;
-houtMinuteStep = hourStep / 60;
+hourMinuteStep = hourStep / 60;
+hourSecondeStep = hourMinuteStep / 60;
 minuteStep = Math.PI * 2 / 60;
 minuteSecondeStep = minuteStep / 60;
 canvas = document.getElementById("myCanvas");
 ctx = canvas.getContext("2d");
 timer = document.getElementById("timer");
 isStop = false;
+now = new Date();
 /*backColor = {
     'singapore': '#000000',
     'joburg': '#000000',
@@ -25,10 +27,9 @@ window.onload = function () {
     imgMontre.src = `img/${selectWatch}/montre.png`;
     imgHeure.src = `img/${selectWatch}/heure.png`;
     imgMinute.src = `img/${selectWatch}/minute.png`;
-    let now = new Date();
 
     timer.value = `${now.getHours() < 10 ? '0' : ''}${now.getHours()}:${now.getMinutes() < 10 ? '0' : ''}${now.getMinutes()}`;
-    interval = window.setInterval(draw, 1000);
+    interval = window.setInterval(draw, 10);
 };
 
 function draw(time = 0) {
@@ -36,16 +37,18 @@ function draw(time = 0) {
     ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     drawImage(imgMontre);
-    let now = new Date();
+
     if (time != 0) {
         now = new Date(now.toDateString() + ' ' + time);
+    }else{
+        now.setSeconds(now.getSeconds()+6)
     }
 
     if (!isStop) {
         timer.value = `${now.getHours() < 10 ? '0' : ''}${now.getHours()}:${now.getMinutes() < 10 ? '0' : ''}${now.getMinutes()}`;
     }
 
-    drawImage(imgHeure, hourMinuteToAngle(now.getHours(), now.getMinutes()));
+    drawImage(imgHeure, hourMinuteToAngle(now.getHours(), now.getMinutes(),now.getSeconds()));
 
     drawImage(imgMinute, minuteToAngle(now.getMinutes(), now.getSeconds()));
 
@@ -74,9 +77,9 @@ function drawImage(img, angle = 0) {
 }
 
 
-function hourMinuteToAngle(hour, minute) {
+function hourMinuteToAngle(hour, minute,seconde) {
     hour = (hour > 12) ? hour - 12 : hour;
-    return hour * hourStep + minute * houtMinuteStep;
+    return hour * hourStep + minute * hourMinuteStep +seconde * hourSecondeStep;
 }
 
 function minuteToAngle(minute, second) {
@@ -90,9 +93,11 @@ function manageTimer() {
 }
 
 function restart() {
+    window.clearInterval(interval);
     isStop = false;
+    now = new Date()
     draw();
-    interval = window.setInterval(draw, 1000);
+    interval = window.setInterval(draw, 10);
 }
 
 function clickTime() {
