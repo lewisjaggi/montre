@@ -14,9 +14,14 @@ window.onload = function () {
     imgMontre = new Image();
     imgHeure = new Image();
     imgMinute = new Image();
+    imgMontre.onload = () =>  {
+        imgHeure.onload = () =>{
+
+            imgMinute.src = `img/${selectWatch}/minute.png`;
+        }
+        imgHeure.src = `img/${selectWatch}/heure.png`;
+    }
     imgMontre.src = `img/${selectWatch}/montre.png`;
-    imgHeure.src = `img/${selectWatch}/heure.png`;
-    imgMinute.src = `img/${selectWatch}/minute.png`;
 
 
     interval = window.setInterval(draw, 10);

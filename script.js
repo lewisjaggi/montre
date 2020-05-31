@@ -27,9 +27,16 @@ window.onload = function () {
     imgMontre = new Image();
     imgHeure = new Image();
     imgMinute = new Image();
+    imgMontre.onload = () => {
+        imgHeure.onload = () => {
+            imgMinute.onload = () => {
+                if (isStop) draw(timer.value);
+            }
+            imgMinute.src = `img/${selectWatch}/minute.png`;
+        }
+        imgHeure.src = `img/${selectWatch}/heure.png`;
+    }
     imgMontre.src = `img/${selectWatch}/montre.png`;
-    imgHeure.src = `img/${selectWatch}/heure.png`;
-    imgMinute.src = `img/${selectWatch}/minute.png`;
 
     timer.value = `${now.getHours() < 10 ? '0' : ''}${now.getHours()}:${now.getMinutes() < 10 ? '0' : ''}${now.getMinutes()}`;
 
@@ -46,7 +53,7 @@ function draw(time = 0) {
         now = new Date(now.toDateString() + ' ' + time);
     } else if (isFast) {
         now.setSeconds(now.getSeconds() + 6)
-    } else if(!isStop){
+    } else if (!isStop) {
         now = new Date();
     }
 
@@ -117,20 +124,10 @@ function changeWatch(watch) {
     backgroundColor = '#000000';
     document.getElementById("color").value = '#000000'
 
-        imgMontre.onload = () =>  {
-            imgHeure.onload = () =>{
-                imgMinute.onload = () =>{
-                    if(isStop) draw(timer.value);
-                }
-                imgMinute.src = `img/${watch}/minute.png`;
-            }
-            imgHeure.src = `img/${watch}/heure.png`;
-        }
-        imgMontre.src = `img/${watch}/montre.png`;
 
+    if (isStop) draw(timer.value);
 
-
-
+    imgMontre.src = `img/${watch}/montre.png`;
 
 
 }
@@ -139,7 +136,7 @@ function changeColor(color) {
     backgroundColor = color;
     if (isStop) {
         draw(timer.value);
-    }else{
+    } else {
         draw();
     }
 
